@@ -22,4 +22,5 @@ public class Usuario {
     @Column(name ="name", length = 50)//nombre de la columna y el tipo de caracteres
     private String name;
 
+    //10131080
 }
