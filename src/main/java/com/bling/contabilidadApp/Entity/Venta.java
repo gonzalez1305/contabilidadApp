@@ -1,4 +1,4 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,9 +30,9 @@ public class Venta {
     @Column(name ="Total_venta", length = 60, nullable = false)
     private int Total_venta;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "fk_cod_vendedor", nullable = false)
-    private Vendedor vendedor;*/
+    private Vendedor vendedor;
 
 }
 

@@ -1,4 +1,4 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,8 @@ public class Pedido {
     @Column(name ="situacion", length = 30, nullable = false)
     private String situacion;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "fk_id_usuario", nullable = false)
-    private Usuario usuario;*/
+    private Usuario usuario;
 
 }

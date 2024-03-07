@@ -1,22 +1,27 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Entity
-@Table(name = "marcas")
+@Table(name = "vendedores")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Marca {
+
+public class Vendedor {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column(name ="id_marcas")
+    @Column(name ="id_vendedor")
     private long id;
 
-    @Column(name = "nombre_marca", nullable = false, length = 50)
-    private String nombreMarca;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_usuario", nullable = false)
+    private Usuario usuario;
 }
 

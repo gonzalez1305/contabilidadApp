@@ -1,4 +1,4 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,8 @@ public class Rol {
     @Column(name ="estado_del_rol", length = 30, nullable = false)
     private String estado_del_rol;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "fk_id_usuario", nullable = false)
-    private Usuario usuario;*/
+    private Usuario usuario;
 }
 
