@@ -12,6 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Venta {
+    //hola
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
