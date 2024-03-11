@@ -1,4 +1,4 @@
-package com.bling.contabilidadApp.Contoller;
+package com.bling.contabilidadApp.controllers;
 
 import com.bling.contabilidadApp.Entity.Rol;
 import com.bling.contabilidadApp.Services.imp.RolService;
