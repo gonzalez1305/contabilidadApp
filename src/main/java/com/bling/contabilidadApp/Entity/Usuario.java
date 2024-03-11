@@ -18,34 +18,34 @@ public class Usuario {
     @Column(name ="id_usuario") //nombre de la llave primaria
     private long id;
 
-    @Column(name ="name", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="name", length = 30)
     private String name;
 
-    @Column(name ="apellido", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="apellido", length = 30)
     private String apellido;
 
-    @Column(name ="telefono", length = 11, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="telefono", length = 11)
     private int telefono;
 
-    @Column(name ="direccion", length = 40, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="direccion", length = 40)
     private String direccion;
 
-    @Column(name ="fecha_Nacimiento", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="fecha_Nacimiento", length = 30)
     private String fechaNacimiento;
 
-    @Column(name ="email", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="email", length = 30)
     private String email;
 
-    @Column(name ="contraseña", length = 80, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="contraseña", length = 80)
     private String contraseña;
 
-    @Column(name ="estado", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="estado", length = 30)
     private String estado;
 
-    @Column(name ="tipo_Usuario", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="tipo_Usuario", length = 30)
     private int tipoUsuario;
 
-    @Column(name ="fk_id_rol", length = 30, nullable = false)//nombre de la columna y el tipo de caracteres
+    @Column(name ="fk_id_rol", length = 30)
     private int fk_id_rol;
 
     //un usuario puede tener varios roles

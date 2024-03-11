@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "fk_id_usuario")
     private Usuario usuario;
 
-    //muchos pedidos pueden contener muchos productos
+    //muchos pedidos pueden contener muchos productos/*
     @ManyToMany
     @JoinTable(
             name = "detalles_pedido",

@@ -16,8 +16,8 @@ import java.util.Map;
 @RequestMapping(path = "/api/producto", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.HEAD})
 @CrossOrigin("*")
 public class ProductoController {
-@Autowired
-    ProductoImp productoImp;
+    @Autowired
+    private ProductoImp productoImp;
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
         Map<String, Object> response = new HashMap<>();

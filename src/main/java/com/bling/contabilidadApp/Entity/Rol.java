@@ -18,10 +18,10 @@ public class Rol {
     @Column(name ="id_rol")
     private long id;
 
-    @Column(name ="nombre", length = 30, nullable = false)
+    @Column(name ="nombre", length = 30)
     private String nombre;
 
-    @Column(name ="estado_del_rol", length = 30, nullable = false)
+    @Column(name ="estado_del_rol", length = 30)
     private String estado_del_rol;
 
     //varios roles pertenecen a varios usuarios

@@ -2,12 +2,13 @@ package com.bling.contabilidadApp.service.imp;
 
 import com.bling.contabilidadApp.Entity.Producto;
 import com.bling.contabilidadApp.repository.ProductoRepository;
-import com.bling.contabilidadApp.repository.VentaRepository;
+
 import com.bling.contabilidadApp.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class ProductoImp implements ProductoService {
 
     @Autowired

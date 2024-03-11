@@ -19,19 +19,19 @@ public class Inventario {
     @Column(name ="id_inventario")
     private long id;
 
-    @Column(name = "cantidad", nullable = false)
+    @Column(name = "cantidad", length = 50)
     private int cantidad;
 
-    @Column(name = "fecha", nullable = false)
+    @Column(name = "fecha",length = 50)
     private Date fecha;
 
-    @Column(name = "cantidad_disponible", nullable = false)
+    @Column(name = "cantidad_disponible", length = 50)
     private int cantidadDisponible;
 
-    @Column(name = "referencia", nullable = false, length = 40)
+    @Column(name = "referencia", length = 40)
     private String referencia;
 
     @ManyToOne
-    @JoinColumn(name = "fk_cod_vendedor", nullable = false)
+    @JoinColumn(name = "fk_cod_vendedor")
     private Vendedor vendedor;
 }

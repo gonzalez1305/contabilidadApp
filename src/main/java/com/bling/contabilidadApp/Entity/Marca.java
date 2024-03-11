@@ -19,7 +19,7 @@ public class Marca {
     @Column(name ="id_marcas")
     private long id;
 
-    @Column(name = "nombre_marca", nullable = false, length = 50)
+    @Column(name = "nombre_marca", length = 50)
     private String nombreMarca;
 
     //muchas marcas pertenecen a muchos productos

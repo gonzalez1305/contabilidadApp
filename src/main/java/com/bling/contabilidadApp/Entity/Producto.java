@@ -20,48 +20,44 @@ public class Producto implements Serializable {
     @Column(name ="id_producto")
     private long id;
 
-    @Column(name = "nombre", nullable = false, length = 40)
+    @Column(name = "nombre",length = 40)
     private String nombre;
 
-    @Column(name = "descripcion", nullable = false, length = 40)
+    @Column(name = "descripcion", length = 40)
     private String descripcion;
 
-    @Column(name = "precio_unitario", nullable = false, length = 50)
+    @Column(name = "precio_unitario",  length = 50)
     private int precioUnitario;
 
-    @Column(name = "cantidad", nullable = false)
+    @Column(name = "cantidad", length = 50)
     private int cantidad;
 
-    @Column(name = "categoria", nullable = false)
+    @Column(name = "categoria", length = 50)
     private String categoria;
 
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado", length = 50)
     private String estado;
 
-    @Column(name = "talla", nullable = false)
+    @Column(name = "talla", length = 50)
     private String talla;
 
-    @Column(name = "color", nullable = false)
+    @Column(name = "color", length = 50)
     private String color;
 
-    @Column(name = "marca", nullable = false)
+    @Column(name = "marca", length = 50)
     private String marca;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_inventario", nullable = false)
+    @JoinColumn(name = "fk_id_inventario")
     private Inventario inventario;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_venta", nullable = false)
+    @JoinColumn(name = "fk_id_venta")
     private Venta venta;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_pedido", nullable = false)
+    @JoinColumn(name = "fk_id_pedido")
     private Pedido pedido;
-
-    //muchos productos pertenecen a muchos pedidos
-    @ManyToMany(mappedBy = "producto_pedido")
-    List<Pedido> producto;
 
     //muchos productos pertenecen a muchos pedidos
     @ManyToMany(mappedBy = "producto_pedido")
