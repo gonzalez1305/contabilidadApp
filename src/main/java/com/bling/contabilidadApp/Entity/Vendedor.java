@@ -1,4 +1,4 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,11 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Entity
 @Table(name = "productos")
 @Data
@@ -43,7 +46,7 @@ public class Producto {
     @Column(name = "marca", nullable = false)
     private String marca;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "fk_id_inventario", nullable = false)
     private Inventario inventario;
 
@@ -53,5 +56,13 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_pedido", nullable = false)
-    private Pedido pedido;*/
+    private Pedido pedido;
+
+    //muchos productos pertenecen a muchos pedidos
+    @ManyToMany(mappedBy = "producto_pedido")
+    List<Pedido> producto;
+
+    //muchos productos pertenecen a muchos pedidos
+    @ManyToMany(mappedBy = "producto_pedido")
+    List<Pedido> productos;
 }

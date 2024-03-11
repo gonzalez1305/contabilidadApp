@@ -1,4 +1,4 @@
-package com.bling.contabilidadApp.Entities;
+package com.bling.contabilidadApp.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class Inventario {
     @Column(name = "referencia", nullable = false, length = 40)
     private String referencia;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "fk_cod_vendedor", nullable = false)
-    private Vendedor vendedor;*/
+    private Vendedor vendedor;
 }
