@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
@@ -11,7 +13,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Venta {
+public class Venta implements Serializable {
     //hola
 
     @Id
@@ -19,20 +21,20 @@ public class Venta {
     @Column(name ="id_venta")
     private long id;
 
-    @Column(name ="estado", length = 40, nullable = false)
+    @Column(name ="estado", length = 40)
     private String estado;
 
-    @Column(name ="fecha", length = 30, nullable = false)
+    @Column(name ="fecha", length = 30)
     private Date fecha;
 
-    @Column(name ="Total_cantidad", length = 15, nullable = false)
+    @Column(name ="Total_cantidad", length = 15)
     private int Total_cantidad;
 
-    @Column(name ="Total_venta", length = 60, nullable = false)
+    @Column(name ="Total_venta", length = 60)
     private int Total_venta;
 
     @ManyToOne
-    @JoinColumn(name = "fk_cod_vendedor", nullable = false)
+    @JoinColumn(name = "fk_cod_vendedor")
     private Vendedor vendedor;
 
 }

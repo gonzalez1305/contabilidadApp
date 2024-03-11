@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,21 +15,21 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Pedido {
+public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name ="id_pedido")
     private long id;
 
-    @Column(name ="fecha", length = 30, nullable = false)
+    @Column(name ="fecha", length = 30)
     private Date fecha;
 
-    @Column(name ="situacion", length = 30, nullable = false)
+    @Column(name ="situacion", length = 30)
     private String situacion;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_usuario", nullable = false)
+    @JoinColumn(name = "fk_id_usuario")
     private Usuario usuario;
 
     //muchos pedidos pueden contener muchos productos

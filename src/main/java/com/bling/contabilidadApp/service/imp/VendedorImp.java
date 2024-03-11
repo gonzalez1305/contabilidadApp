@@ -15,7 +15,7 @@ public class VendedorImp implements VendedorService {
     private VendedorRepository vendedorRepository;
 
     @Override
-    public List<Vendedor> findAll() throws Exception {
+    public List<Vendedor> findAll()  {
         return this.vendedorRepository.findAll();
     }
 
