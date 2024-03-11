@@ -30,4 +30,5 @@ public class Pedido {
     @JoinColumn(name = "fk_id_usuario", nullable = false)
     private Usuario usuario;
 
+
 }
