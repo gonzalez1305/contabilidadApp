@@ -1,8 +1,5 @@
 package com.bling.contabilidadApp.controllers;
-
-import com.bling.contabilidadApp.Entity.Vendedor;
 import com.bling.contabilidadApp.Entity.Venta;
-import com.bling.contabilidadApp.service.imp.VendedorImp;
 import com.bling.contabilidadApp.service.imp.VentaImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,4 +61,62 @@ public class VentaController {
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
+
+    // actualizar los datos de la venta
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Map<String, Object>> update(@PathVariable Long id, @RequestBody Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Venta venta = this.ventaImp.findById(Math.toIntExact(id));
+            if (venta == null) {
+                response.put("status", HttpStatus.NOT_FOUND);
+                response.put("data", "Venta no encontrada");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+
+            venta.setEstado(request.get("estado").toString());
+            venta.setFecha(Date.valueOf(request.get("fecha").toString()));
+            venta.setTotal_cantidad(Integer.parseInt(request.get("total_cantidad").toString()));
+            venta.setTotal_venta(Integer.parseInt(request.get("total_venta").toString()));
+
+            this.ventaImp.create(venta);
+
+            response.put("status", "success");
+            response.put("data", "actualización exitosa");
+
+        } catch (Exception e) {
+            response.put("status", HttpStatus.BAD_GATEWAY);
+            response.put("data",e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // eliminar venta
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Venta venta = this.ventaImp.findById(Math.toIntExact(id));
+            if (venta == null) {
+                response.put("status", HttpStatus.NOT_FOUND);
+                response.put("data", "Venta no encontrada");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+
+            this.ventaImp.delete(venta);
+
+            response.put("status", "success");
+            response.put("data", "eliminación exitosa");
+
+        } catch (Exception e) {
+            response.put("status", HttpStatus.BAD_GATEWAY);
+            response.put("data",e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

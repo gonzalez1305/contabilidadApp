@@ -27,10 +27,9 @@ public class VendedorController {
         try {
             System.out.println("@@@"+request);
             Vendedor vendedor=new Vendedor();
-           // vendedor.setId(Long.parseLong(request.get("id").toString()));
+            //vendedor.setId(Long.parseLong(request.get("id").toString()));
             vendedor.setNombre(request.get("name").toString());
-            // Obtener el id del usuario desde la solicitud
-            long userId = Long.parseLong(request.get("userId").toString());
+
             this.vendedorImp.create(vendedor);
 
             response.put("status", "succes");
@@ -63,6 +62,61 @@ public class VendedorController {
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
+
+    //actualizar los datos del vendedor
+    @PutMapping("update/{id}")
+    public ResponseEntity<Map<String, Object>> update(@PathVariable Long id, @RequestBody Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Vendedor vendedor = this.vendedorImp.findById(id);
+            if (vendedor == null) {
+                response.put("status", HttpStatus.NOT_FOUND);
+                response.put("data", "Vendedor no encontrado");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+
+            vendedor.setNombre(request.get("name").toString());
+
+            this.vendedorImp.create(vendedor);
+
+            response.put("status", "succes");
+            response.put("data", "actualización exitosa");
+
+        } catch (Exception e) {
+            response.put("status", HttpStatus.BAD_GATEWAY);
+            response.put("data",e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    //eliminar vendedor
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            Vendedor vendedor = this.vendedorImp.findById(id);
+            if (vendedor == null) {
+                response.put("status", HttpStatus.NOT_FOUND);
+                response.put("data", "Vendedor no encontrado");
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+
+            this.vendedorImp.delete(vendedor);
+
+            response.put("status", "succes");
+            response.put("data", "eliminación exitosa");
+
+        } catch (Exception e) {
+            response.put("status", HttpStatus.BAD_GATEWAY);
+            response.put("data",e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+}
 
 

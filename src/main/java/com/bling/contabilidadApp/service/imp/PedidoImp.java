@@ -1,7 +1,6 @@
 package com.bling.contabilidadApp.service.imp;
 import com.bling.contabilidadApp.Entity.Pedido;
 import com.bling.contabilidadApp.repository.PedidoRepository;
-import com.bling.contabilidadApp.repository.VentaRepository;
 import com.bling.contabilidadApp.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,11 @@ public class PedidoImp implements PedidoService{
 
     @Override
     public Pedido findById(int id_pedido) {
+        return null;
+    }
+
+    @Override
+    public Pedido findById(long id_pedido) {
         return this.pedidoRepository.findById((long) id_pedido).orElse(null);
     }
 

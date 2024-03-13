@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class RolService {
+public class
+
+RolService {
 
         @Autowired
         private RolRepository rolRepository;
