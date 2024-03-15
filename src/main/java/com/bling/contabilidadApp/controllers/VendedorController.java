@@ -1,7 +1,7 @@
 package com.bling.contabilidadApp.controllers;
-
+import com.bling.contabilidadApp.Entity.Usuario;
 import com.bling.contabilidadApp.Entity.Vendedor;
-import com.bling.contabilidadApp.service.VendedorService;
+import com.bling.contabilidadApp.service.imp.UsuarioImp;
 import com.bling.contabilidadApp.service.imp.VendedorImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/api/vendedor/", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.HEAD})
@@ -20,47 +19,48 @@ public class VendedorController {
 
     @Autowired
     private VendedorImp vendedorImp;
+
+   // @Autowired
+    //private UsuarioImp usuarioImp;
     @PostMapping("create")
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> create(@RequestBody List<Map<String, Object>> requests) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            System.out.println("@@@"+request);
-            Vendedor vendedor=new Vendedor();
-            //vendedor.setId(Long.parseLong(request.get("id").toString()));
-            vendedor.setNombre(request.get("name").toString());
+            for (Map<String, Object> request : requests) {
+                Vendedor vendedor = new Vendedor();
+                vendedor.setNombre(request.get("name").toString());
+                //Usuario usuario = usuarioImp.findById(Long.parseLong(request.get("fk_id_usuario").toString()));
+                //vendedor.setUsuario(usuario);
+                this.vendedorImp.create(vendedor);
+            }
 
-            this.vendedorImp.create(vendedor);
-
-            response.put("status", "succes");
-            response.put("data", "registro exitoso");
+            response.put("status", "success");
+            response.put("data", "registros exitosos");
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> finAll(){
         Map<String, Object> response = new HashMap<>();
 
         try {
             List<Vendedor> vendedorList=this.vendedorImp.findAll();
-            response.put("status", "succes");
+            response.put("status", "success");
             response.put("data",vendedorList);
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
             response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 
     //actualizar los datos del vendedor

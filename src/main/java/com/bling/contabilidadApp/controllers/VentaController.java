@@ -1,5 +1,7 @@
 package com.bling.contabilidadApp.controllers;
+import com.bling.contabilidadApp.Entity.Vendedor;
 import com.bling.contabilidadApp.Entity.Venta;
+import com.bling.contabilidadApp.service.imp.VendedorImp;
 import com.bling.contabilidadApp.service.imp.VentaImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,49 +20,54 @@ public class VentaController {
 
     @Autowired
     private VentaImp ventaImp;
-    @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
+    @Autowired
+    private VendedorImp vendedorImp;
+
+    @PostMapping("create")
+    public ResponseEntity<Map<String, Object>> create(@RequestBody List<Map<String, Object>> requests) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            System.out.println("@@@"+request);
-            Venta venta=new Venta();
+            for (Map<String, Object> request : requests) {
+                Venta venta = new Venta();
+                venta.setEstado(request.get("estado").toString());
+                venta.setFecha(Date.valueOf(request.get("fecha").toString()));
+                venta.setTotal_cantidad(Integer.parseInt(request.get("total_cantidad").toString()));
+                venta.setTotal_venta(Integer.parseInt(request.get("total_venta").toString()));
+                Vendedor vendedor = vendedorImp.findById(Long.parseLong(request.get("fk_cod_vendedor").toString()));
+                venta.setVendedor(vendedor);
+                this.ventaImp.create(venta);
 
-            venta.setEstado(request.get("estado").toString());
-            venta.setFecha(Date.valueOf(request.get("fecha").toString()));
-            venta.setTotal_cantidad(Integer.parseInt("Total_cantidad"));
-            venta.setTotal_venta(Integer.parseInt("Total_venta"));
+            }
 
-            response.put("status", "succes");
-            response.put("data", "registro exitoso");
+            response.put("status", "success");
+            response.put("data", "registros exitosos");
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> finAll(){
         Map<String, Object> response = new HashMap<>();
 
         try {
             List<Venta> ventaList=this.ventaImp.findAll();
-            response.put("status", "succes");
-            response.put("data",ventaList);
+            response.put("status", "success");
+            response.put("data", ventaList);
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+
 
     // actualizar los datos de la venta
     @PutMapping("/update/{id}")
@@ -68,18 +75,16 @@ public class VentaController {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            Venta venta = this.ventaImp.findById(Math.toIntExact(id));
+            Venta venta = this.ventaImp.findById(id);
             if (venta == null) {
                 response.put("status", HttpStatus.NOT_FOUND);
                 response.put("data", "Venta no encontrada");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-
             venta.setEstado(request.get("estado").toString());
             venta.setFecha(Date.valueOf(request.get("fecha").toString()));
             venta.setTotal_cantidad(Integer.parseInt(request.get("total_cantidad").toString()));
             venta.setTotal_venta(Integer.parseInt(request.get("total_venta").toString()));
-
             this.ventaImp.create(venta);
 
             response.put("status", "success");
@@ -94,12 +99,12 @@ public class VentaController {
     }
 
     // eliminar venta
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            Venta venta = this.ventaImp.findById(Math.toIntExact(id));
+            Venta venta = this.ventaImp.findById(id);
             if (venta == null) {
                 response.put("status", HttpStatus.NOT_FOUND);
                 response.put("data", "Venta no encontrada");

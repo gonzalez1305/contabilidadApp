@@ -1,8 +1,6 @@
 package com.bling.contabilidadApp.service.imp;
-
 import com.bling.contabilidadApp.Entity.Producto;
 import com.bling.contabilidadApp.repository.ProductoRepository;
-
 import com.bling.contabilidadApp.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +11,15 @@ public class ProductoImp implements ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
     @Override
-    public List<Producto> findAll() throws Exception {
+    public List<Producto> findAll()   {
         return this.productoRepository.findAll();
     }
 
     @Override
     public Producto findById(long id_producto) {
-        return this.productoRepository.findById((long) id_producto).orElse(null);
+        return this.productoRepository.findById(id_producto).orElse(null);
     }
 
     @Override

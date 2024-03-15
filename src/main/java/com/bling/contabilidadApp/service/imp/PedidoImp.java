@@ -11,19 +11,15 @@ import java.util.List;
 public class PedidoImp implements PedidoService{
     @Autowired
     private PedidoRepository pedidoRepository;
+
+
     @Override
-    public List<Pedido> findAll() throws Exception {
+    public List<Pedido> findAll()  {
         return this.pedidoRepository.findAll();
     }
 
     @Override
-    public Pedido findById(int id_pedido) {
-        return null;
-    }
-
-    @Override
-    public Pedido findById(long id_pedido) {
-        return this.pedidoRepository.findById((long) id_pedido).orElse(null);
+    public Pedido findById(Long id_pedido) {return this.pedidoRepository.findById(id_pedido).orElse(null);
     }
 
     @Override

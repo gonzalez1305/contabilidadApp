@@ -15,27 +15,22 @@ public class VentaImp implements VentaService{
 
 
     @Override
-    public List<com.bling.contabilidadApp.Entity.Venta> findAll() throws Exception {
+    public List<Venta> findAll()  {
         return this.ventaRepository.findAll();
     }
+
     @Override
-    public com.bling.contabilidadApp.Entity.Venta findById(int id_ventas) {
-        return this.ventaRepository.findById((long) id_ventas).orElse(null);
+    public Venta findById(Long id_venta) {
+        return this.ventaRepository.findById(id_venta).orElse(null);
     }
 
     @Override
-    public void create(com.bling.contabilidadApp.Entity.Venta venta) {
-
-        this.ventaRepository.save(venta);
-    }
+    public void create(Venta venta){this.ventaRepository.save(venta);}
 
     @Override
-    public void update(com.bling.contabilidadApp.Entity.Venta venta) {
-        this.ventaRepository.save(venta);
-    }
+    public void update(Venta venta){this.ventaRepository.save(venta);}
 
     @Override
-    public void delete(com.bling.contabilidadApp.Entity.Venta venta) {
-        this.ventaRepository.save(venta);
+    public void delete(Venta venta){this.ventaRepository.save(venta);}
     }
-}
+

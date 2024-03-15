@@ -1,8 +1,6 @@
 package com.bling.contabilidadApp.controllers;
-
-import com.bling.contabilidadApp.Entity.Producto;
-import com.bling.contabilidadApp.Entity.Venta;
-import com.bling.contabilidadApp.service.imp.ProductoImp;
+import com.bling.contabilidadApp.Entity.*;
+import com.bling.contabilidadApp.service.imp.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,35 +16,48 @@ import java.util.Map;
 public class ProductoController {
     @Autowired
     private ProductoImp productoImp;
-    @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
+    @Autowired
+    private VentaImp ventaImp;
+
+    @Autowired
+    private PedidoImp pedidoImp;
+
+    //@Autowired
+    //private InventarioImp inventarioImp;
+    @PostMapping("create")
+    public ResponseEntity<Map<String, Object>> create(@RequestBody List<Map<String, Object>> requests) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            System.out.println("@@@"+request);
-            Producto producto=new Producto();
+            for (Map<String, Object> request : requests) {
+                Producto producto = new Producto();
 
-            producto.setNombre(request.get("nombre").toString());
-            producto.setDescripcion(request.get("descripcion").toString());
-            producto.setPrecioUnitario(Integer.parseInt("precio_unitario"));
-            producto.setCantidad(Integer.parseInt("cantidad"));
-            producto.setCategoria(request.get("categoria").toString());
-            producto.setEstado(request.get("estado").toString());
-            producto.setTalla(request.get("talla").toString());
-            producto.setColor(request.get("color").toString());
-            producto.setMarca(request.get("marca").toString());
-
+                producto.setNombre(request.get("nombre").toString());
+                producto.setDescripcion(request.get("descripcion").toString());
+                producto.setPrecioUnitario(Integer.parseInt(request.get("precio_unitario").toString()));
+                producto.setCantidad(Integer.parseInt(request.get("cantidad").toString()));
+                producto.setCategoria(request.get("categoria").toString());
+                producto.setEstado(request.get("estado").toString());
+                producto.setTalla(request.get("talla").toString());
+                producto.setColor(request.get("color").toString());
+                producto.setMarca(request.get("marca").toString());
+                Venta venta = ventaImp.findById(Long.parseLong(request.get("fk_id_venta").toString()));
+                producto.setVenta(venta);
+                Pedido pedido = pedidoImp.findById(Long.parseLong(request.get("fk_id_pedido").toString()));
+                producto.setPedido(pedido);
+                //Inventario inventario = inventarioImp.findById(Long.parseLong(request.get("fk_id_inventario").toString()));
+                //producto.setInventario(inventario);
+                this.productoImp.create(producto);
+            }
             response.put("status", "succes");
             response.put("data", "registro exitoso");
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> finAll(){
@@ -58,13 +69,11 @@ public class ProductoController {
             response.put("data",productoList);
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 
     // actualizar los datos del producto
@@ -97,7 +106,7 @@ public class ProductoController {
 
         } catch (Exception e) {
             response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data", e.getMessage());
+            response.put("data",e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -123,7 +132,7 @@ public class ProductoController {
 
         } catch (Exception e) {
             response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data", e.getMessage());
+            response.put("data",e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);

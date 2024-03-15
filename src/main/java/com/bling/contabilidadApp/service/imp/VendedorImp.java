@@ -1,5 +1,4 @@
 package com.bling.contabilidadApp.service.imp;
-
 import com.bling.contabilidadApp.Entity.Vendedor;
 import com.bling.contabilidadApp.repository.VendedorRepository;
 import com.bling.contabilidadApp.service.VendedorService;
@@ -21,6 +20,7 @@ public class VendedorImp implements VendedorService {
 
     @Override
     public Vendedor findById(Long id_vendedor) {
+
         return this.vendedorRepository.findById(id_vendedor).orElse(null);
     }
 

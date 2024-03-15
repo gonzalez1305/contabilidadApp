@@ -1,6 +1,6 @@
 package com.bling.contabilidadApp.controllers;
-
 import com.bling.contabilidadApp.Entity.Pedido;
+import com.bling.contabilidadApp.Entity.Vendedor;
 import com.bling.contabilidadApp.Entity.Venta;
 import com.bling.contabilidadApp.service.imp.PedidoImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +19,33 @@ import java.util.Map;
 public class PedidoController {
 @Autowired
 PedidoImp pedidoImp;
-    @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> create(@RequestBody Map<String, Object> request) {
+
+    // @Autowired
+    //private UsuarioImp usuarioImp;
+    @PostMapping("create")
+    public ResponseEntity<Map<String, Object>> create(@RequestBody List<Map<String, Object>> requests) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            System.out.println("@@@"+request);
-            Pedido pedido =new Pedido();
+            for (Map<String, Object> request : requests) {
+                Pedido pedido = new Pedido();
+                pedido.setFecha(Date.valueOf(request.get("fecha").toString()));
+                pedido.setSituacion(request.get("situacion").toString());
+                //Usuario usuario = usuarioImp.findById(Long.parseLong(request.get("fk_id_usuario").toString()));
+                //vendedor.setUsuario(usuario);
+                this.pedidoImp.create(pedido);
 
-            pedido.setFecha(Date.valueOf(request.get("fecha").toString()));
-            pedido.setSituacion(request.get("situacion").toString());
+            }
 
             response.put("status", "succes");
             response.put("data", "registro exitoso");
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
     @GetMapping("all")
     public ResponseEntity<Map<String, Object>> finAll(){
@@ -52,13 +57,11 @@ PedidoImp pedidoImp;
             response.put("data",pedidoList);
 
         } catch (Exception e) {
-
-            response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data",e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+            response.put("status", HttpStatus.BAD_REQUEST);
+            response.put("data", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
     // actualizar los datos del pedido
     @PutMapping("/update/{id}")
@@ -75,7 +78,6 @@ PedidoImp pedidoImp;
 
             pedido.setFecha(Date.valueOf(request.get("fecha").toString()));
             pedido.setSituacion(request.get("situacion").toString());
-
             this.pedidoImp.create(pedido);
 
             response.put("status", "success");
@@ -83,7 +85,7 @@ PedidoImp pedidoImp;
 
         } catch (Exception e) {
             response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data", e.getMessage());
+            response.put("data",e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -109,7 +111,7 @@ PedidoImp pedidoImp;
 
         } catch (Exception e) {
             response.put("status", HttpStatus.BAD_GATEWAY);
-            response.put("data", e.getMessage());
+            response.put("data",e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
